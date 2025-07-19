@@ -45,7 +45,7 @@ Also, this page assumes you know how to use Vortex Mod Manager, If there's enoug
 
 ---
 
-<details>
+<details open>
 <summary>Installing Mods</summary>
     <div align="left">
 Unfortunately, It is not completely hands off endeavour if you want to take advantage of all the features of Vortex: Proper Deployment, Dependencies and the Variants systems. <br/> <br/>
