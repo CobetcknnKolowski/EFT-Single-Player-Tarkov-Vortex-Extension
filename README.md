@@ -4,7 +4,7 @@ This is an Extension for the Vortex Modding platform Created by Nexus Mods that 
 Please Pardon the mess, This is all new to me from the Developer side. <br/>
 Also, this page assumes you know how to use Vortex Mod Manager, If there's enough demand, I will attach a guide to using it. <br/>
 ---
-<details>
+<details open>
 <summary>Installing/Updating the extension </summary>
   <div align="left">
     Go to the "Extensions" List in the Vortex app <br/>   
@@ -26,7 +26,7 @@ Also, this page assumes you know how to use Vortex Mod Manager, If there's enoug
 
 ---
  
-<details>
+<details open>
 <summary>Supported Tools</summary>
   <div align="left">
     Vortex allows you to create shortcuts to tools that can easily be accessed from your Vortex dashboard <br/>
