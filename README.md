@@ -9,7 +9,7 @@ Also, this page assumes you know how to use Vortex Mod Manager, If there's enoug
   <div align="left">
     Go to the "Extensions" List in the Vortex app <br/>   
     <img width="238" height="410" alt="image" src="https://github.com/user-attachments/assets/1415c11c-7e1a-411f-a295-4d017e8e7b37" /> <br/> <br/>
-    Click on the button in the bottom right and select the zip file you downloaded, "Vortex Extension Update - Escape From Tarkov - Single Player Tarkov Mod Vortex Extension Vx.x.x". <br/> 
+    Click on the button in the bottom right and select the zip file you downloaded, "EFT - Single Player Tarkov Vortex Extension vx.x.x". <br/> 
     <img width="1297" height="155" alt="image" src="https://github.com/user-attachments/assets/f973fea5-ee8e-45d0-a0e7-357024a621ae" /> <br/> <br/>  
     Restart Vortex, and Search the "Extensions" List, if you see it, it successfuly installed, If not, Repeat install and restart. (I do not know why Multiple install attempts is needed sometimes) <br/> 
     <img width="612" height="187" alt="image" src="https://github.com/user-attachments/assets/193c7021-bb59-4ee2-8862-dfe9097e0e09" /> <br/> <br/>
