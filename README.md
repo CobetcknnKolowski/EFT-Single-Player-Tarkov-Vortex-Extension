@@ -10,7 +10,7 @@ A game extension for [Vortex](https://www.nexusmods.com/about/vortex/), the mod 
 
 | Feature | In short | Details |
 |---|---|---|
-| **SPT-aware installer** | Detects your SPT folder layout (3.11, 4.0 or 4.1+), strips extra wrapper folders from archives, drops readme/license files and keeps empty folders a mod needs. | [Installing Mods](docs/installing-mods.md) |
+| **SPT-aware installer** | Detects your SPT folder layout (3.11, 4.0 or 4.1+), strips extra wrapper folders from archives, moves loose readme/license files into the mod's folder and keeps empty folders a mod needs. | [Installing Mods](docs/installing-mods.md) |
 | **Update Mod Information** | One click fills in a mod's name, author, picture, category, description, Fika compatibility and dependency rules from The Forge, then from its GitHub, GitLab, Codeberg or Gitea repository. | [Update Mod Information](docs/mod-information.md) |
 | **Update checks** | Vortex's "Check for updates" asks The Forge and the mod's source repository for newer versions. It also runs by itself when the game is activated and every 8 hours. | [Update Checks](docs/update-checks.md) |
 | **Dependencies built for you** | "Requires", "load after" and Fika "conflicts" rules are created from The Forge's data. | [File Naming](docs/file-naming.md) |
