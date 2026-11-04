@@ -24,13 +24,13 @@ A game extension for [Vortex](https://www.nexusmods.com/about/vortex/), the mod 
 
 - **Vortex** (a current release).
 - **SPT** installed with one of the supported layouts: SPT 3.11, SPT 4.0, or SPT 4.1 and newer.
-- **Vortex Library - Cobet's Utilities** (a second extension). It reads and writes each mod's `modinfo.json` and adds the Rules List editor. *Update Mod Information needs it*; everything else works without it. <!-- TODO: add the download link for the Library extension -->
+- **[Vortex Library - Cobet's Utilities](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities)** (a second extension). It reads and writes each mod's `modinfo.json` and adds the Rules List editor. *Update Mod Information needs it*; everything else works without it.
 
 ---
 
 ## Installing or updating the extension
 
-1. Download the extension `.zip` from the [Releases](../../releases) page, and the Library extension (see Requirements).
+1. Download the extension `.zip` from the [Releases](../../releases) page, and the Library extension from [its Releases page](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities/releases).
 2. In Vortex, open **Extensions**.<br/>
    <img width="238" alt="Extensions in the Vortex sidebar" src="https://github.com/user-attachments/assets/1415c11c-7e1a-411f-a295-4d017e8e7b37" />
 3. Use the button in the bottom right to install the extension from the `.zip` file. Do the same for the Library extension.<br/>
