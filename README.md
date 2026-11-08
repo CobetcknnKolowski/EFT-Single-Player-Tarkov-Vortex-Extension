@@ -17,16 +17,14 @@ This extension is for people who want a mod manager, but are willing to put in s
 </details>
 
 <details open>
-<summary><h3>Why does Vortex use so much storage space?</h3></summary>
+<summary><h3>Why does Vortex "use" so much storage space?</h3></summary>
 
-Modding with Vortex can use almost **three times** the space of the mods themselves, because each mod can exist in up to four places:
+A Mod for Vortex "shows up" in up to four places:
 
 1. **The archive you downloaded**, wherever your browser saved it.
 2. **Vortex's copy of that archive**, in Vortex's own archive folder.
 3. **The unpacked archive in the "Staging" folder**, where Vortex keeps every installed mod.
 4. **The unpacked archive "Deployed" to your game folder**, where the game actually uses it.
-
-For example, my downloaded archives folder is 64 GB, my Vortex archives folder is 79 GB, my staging folder is 102 GB, and my game folder is 84 GB (26 GB of which is not default EFT/SPT). That may seem like a lot, but I have multiple profiles from SPT 3.11.4 to 4.1.6, and many versions of the same mods, from stress testing every YouTuber modpack I could find as well as several of my own profiles for each version.
 
 The staging and game folders are not really two full copies. With Vortex's **Hardlink Deployment**, a deployed file and its staged file share the same data on the drive, so the numbers can look larger or smaller depending on your file system and on the program you use to check them. In Vortex's own words:
 
