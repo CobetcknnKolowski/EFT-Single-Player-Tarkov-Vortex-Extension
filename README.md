@@ -1,68 +1,119 @@
 # EFT - Single Player Tushonka (SPT) Vortex Extension
 
-A game extension for [Vortex](https://www.nexusmods.com/about/vortex/), the mod manager by Nexus Mods, that lets you manage your **Single Player Tarkov (SPT)** mods: install, enable and disable, deploy, keep dependencies in order, and check for updates. Mod information and updates come from [The Forge](https://forge.sp-tarkov.com) and from each mod's source code repository.
+A game extension for [Vortex](https://www.nexusmods.com/about/vortex/), the mod manager by Nexus Mods, for managing **Single Player Tarkov (SPT)** mods.
 
-> This page assumes you already know the basics of Vortex (profiles, deploying, the Mods page). If you would like a beginner's guide to Vortex itself, let me know.
+## AI Disclaimer
+
+Much of this extension's code was written with the help of AI. Every feature was planned, directed and reviewed by me, and the extension has been through hundreds of hours of hands-on testing with real mod lists and profiles from SPT 3.11.4 to 4.1.6. If something does not behave the way this page says, please [open an issue](../../issues).
+
+<details open>
+<summary><h2>FAQ</h2></summary>
+
+<details open>
+<summary><h3>Who is this for?</h3></summary>
+
+This extension is for people who want a mod manager, but are willing to put in some personal effort to maintain their mod lists: naming archives so they can be recognized, checking that mods are packaged correctly, and keeping an eye on updates.
+
+</details>
+
+<details open>
+<summary><h3>Why does Vortex use so much storage space?</h3></summary>
+
+Modding with Vortex can use almost **three times** the space of the mods themselves, because each mod can exist in up to four places:
+
+1. **The archive you downloaded**, wherever your browser saved it.
+2. **Vortex's copy of that archive**, in Vortex's own archive folder.
+3. **The unpacked archive in the "Staging" folder**, where Vortex keeps every installed mod.
+4. **The unpacked archive "Deployed" to your game folder**, where the game actually uses it.
+
+For example, my downloaded archives folder is 64 GB, my Vortex archives folder is 79 GB, my staging folder is 102 GB, and my game folder is 84 GB (26 GB of which is not default EFT/SPT). That may seem like a lot, but I have multiple profiles from SPT 3.11.4 to 4.1.6, and many versions of the same mods, from stress testing every YouTuber modpack I could find as well as several of my own profiles for each version.
+
+The staging and game folders are not really two full copies. With Vortex's **Hardlink Deployment**, a deployed file and its staged file share the same data on the drive, so the numbers can look larger or smaller depending on your file system and on the program you use to check them. In Vortex's own words:
+
+> File Systems store files in two parts:
+> - an index entry that contains the file name, access rights, change and creating times and so on
+> - the actual file data
+>
+> Hard Links work by creating a second index entry referencing the same data as the original. The second index is a full-fledged index, so there is no differentiation between "original" and "link" after the link was created.
+>
+> Advantages:
+> - perfect compatibility with all applications
+> - no performance penalty
+> - Wide OS and FS support
+>
+> Disadvantages:
+> - mods have to be on the same partition as the game
+> - Due to fact hard links are so "compatible", a lot of applications will act as if original and link were separate files. This includes some backup solutions, tools that measure used disk space and so on, so it will often look like the link was actually a copy.
+
+</details>
+
+<!-- More FAQ entries go here, each in its own collapsible block like the two above. -->
+
+</details>
+
+<details open>
+<summary><h2>Quick Guide</h2></summary>
+
+<details open>
+<summary><h3>Part 1: Vortex and Extension Installation</h3></summary>
+
+<!-- TODO: test a fresh ("virgin") Vortex install and confirm the exact steps and labels below. -->
+
+**3.0** Download and install [Vortex](https://www.nexusmods.com/about/vortex/) to the **same drive** as the games you plan to manage.
+
+- **3.0.1** You can save space by having Vortex save its copies of your archives to a different drive.
+
+**3.1.a** Download the extension `.zip` from the [Releases](../../releases) page, drop it into the **"Drop File(s)"** box on Vortex's **Extensions** tab, and restart Vortex.
+<!-- Screenshot: the Extensions tab with the Drop File(s) box -->
+
+**3.1.b** You can also download my [Utilities Library](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities) now if you wish, and add it to Vortex the same way. It is optional: it saves each mod's information to a `modinfo.json` file and adds an editable Rules List to the mod details panel.
+
+**3.2** If you are not asked to find the game's location automatically:
+1. Go to the **Home** tab, **Games** section.
+2. Search for **SPT** in the search bar in the top right.
+3. Open the menu (⋮) in the top right of the SPT game box, and choose **Manually Set Location**.
+4. Select the root of the game folder where you installed SPT: the folder that holds `SPT_Runtime`, `BepInEx`, `EscapeFromTarkov_Data` and so on.
+5. If it asks for a game store, choose **Other**, even if you bought the game on Steam.
+<!-- Screenshot: Manually Set Location in the SPT game box -->
+
+**3.3** Go to the **SPT** tab in the left menu, **Game Settings** section. Choose a **Staging Folder**, and make sure the **Deployment** method is **Hardlink**. In other words, the staging folder should be on the same drive as your game folder.
+<!-- Screenshot: Game Settings with the staging folder and Hardlink deployment -->
+
+</details>
+
+<details open>
+<summary><h3>Part 2: Mod Installation</h3></summary>
+
+**3.4** When you download a mod from [The Forge](https://forge.sp-tarkov.com) (or anywhere, really), make sure of a few things:
+
+- **3.4.1** The file name has a readable version: `My SPT Mod-vX.Y.Z`.
+- **3.4.2** If the file is from The Forge, the name has the Forge ID with a **M**od or **A**ddon label: `My SPT Mod-vX.Y.Z [~M5247~]` or `My SPT Addon-vX.Y.Z [~A201~]`. Use a capital `M` or `A`: Vortex matches dependency rules against archive names, and the match is case-sensitive.
+- **3.4.3** The mod is packaged correctly. If the author put an extra folder above `SPT_Runtime` or `BepInEx`, no worries: my extension's installer fixes that automatically. If it is *missing* a folder (for example a 4.1.x mod with `user` at the top of the archive), you will need to fix it yourself by repacking it. You can also take the opportunity to repack it as a `.7z` to save some space.
+<!-- Screenshot: a correctly packed archive, and one that needs repacking -->
+
+**3.5** Head to the **Mods** section and drag the archive onto the **"Drop File(s)"** area at the bottom.
+
+**3.6** The mod starts in the **Never Installed** category (a copy of the archive has been saved to Vortex's archive folder). Click the blue button to **Install** it, which moves it to the **Disabled** category. Or use the drop-down and choose **Enabled** to move it straight to the **Enabled** category.
+<!-- Screenshot: a mod in Never Installed with the Install button and its drop-down -->
+
+**3.7** If your archive was named correctly, the extension automatically asks The Forge (and the mod's source code repository) for the mod's information and fills it into Vortex for you. This includes, but is not limited to:
+- the mod's thumbnail and short description,
+- its version, and its **Variant** (which SPT versions this mod file is for),
+- its Forge GUID and Forge category,
+- for addons, its Addon ID and Parent Mod ID,
+- its dependencies, as Vortex rules,
+- links to its source code, and to its web page.
+
+**3.8** If you received no warnings about any issues, go to the menu in the top right and click the rocket symbol to **Deploy** your mods.
+
+**3.9** After deploying, start the **SPT Server** and **SPT Launcher** with their shortcuts in the lower left.
+
+**3.10** The server may complain about empty folders with "missing" assemblies. As long as none of them is a mod you expected to be installed, you can safely ignore these warnings. (As somebody with four 4.1.x profiles, I have quite a few empty folders for mods I am not currently using.)
+
+</details>
+
+</details>
 
 ---
 
-## What it does
-
-| Feature | In short | Details |
-|---|---|---|
-| **SPT-aware installer** | Detects your SPT folder layout (3.11, 4.0 or 4.1+), strips extra wrapper folders from archives, drops readme/license files and keeps empty folders a mod needs. | [Installing Mods](docs/installing-mods.md) |
-| **Update Mod Information** | One click fills in a mod's name, author, picture, category, description, Fika compatibility and dependency rules from The Forge, then from its GitHub, GitLab, Codeberg or Gitea repository. | [Update Mod Information](docs/mod-information.md) |
-| **Update checks** | Vortex's "Check for updates" asks The Forge and the mod's source repository for newer versions. It also runs by itself when the game is activated and every 8 hours. | [Update Checks](docs/update-checks.md) |
-| **Dependencies built for you** | "Requires", "load after" and Fika "conflicts" rules are created from The Forge's data. | [File Naming](docs/file-naming.md) |
-| **Tool shortcuts** | SPT Server, SPT Launcher, Server Value Modifier, Fika Installer and Give-UI in the Vortex dashboard. | [Tools and Configs](docs/tools-and-configs.md) |
-| **Config backups** | "Write Configs" copies your BepInEx, SPT settings and mod configs into a timestamped folder; it also runs by itself when your SPT session ends. | [Tools and Configs](docs/tools-and-configs.md) |
-| **SPT columns** | Forge ID, GUID, Addon ID, Fika Compatibility, Source Code Link and more on the Mods page. | [Mod Columns](docs/mod-columns.md) |
-
----
-
-## Requirements
-
-- **Vortex** (a current release).
-- **SPT** installed with one of the supported layouts: SPT 3.11, SPT 4.0, or SPT 4.1 and newer.
-- **[Vortex Library - Cobet's Utilities](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities)** (a second extension). It reads and writes each mod's `modinfo.json` and adds the Rules List editor. *Update Mod Information needs it*; everything else works without it.
-
----
-
-## Installing or updating the extension
-
-1. Download the extension `.zip` from the [Releases](../../releases) page, and the Library extension from [its Releases page](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities/releases).
-2. In Vortex, open **Extensions**.<br/>
-   <img width="238" alt="Extensions in the Vortex sidebar" src="https://github.com/user-attachments/assets/1415c11c-7e1a-411f-a295-4d017e8e7b37" />
-3. Use the button in the bottom right to install the extension from the `.zip` file. Do the same for the Library extension.<br/>
-   <img width="900" alt="Install extension from file" src="https://github.com/user-attachments/assets/f973fea5-ee8e-45d0-a0e7-357024a621ae" />
-4. Restart Vortex and search the Extensions list to confirm both are installed. If one is missing, install it again and restart.<br/>
-   <img width="612" alt="Extension shown in the list" src="https://github.com/user-attachments/assets/193c7021-bb59-4ee2-8862-dfe9097e0e09" />
-5. Open **Games**, search for **SPT**, and activate it. Point Vortex at your SPT folder (the folder with `EscapeFromTarkov.exe`).<br/>
-   <img width="259" alt="Games in the Vortex sidebar" src="https://github.com/user-attachments/assets/f871b75a-c84b-4b9c-9788-c9c68a31dc0b" />
-
-Then follow [Getting Started](docs/getting-started.md): set your profile's **SPT Version** and install your first mod.
-
----
-
-## Documentation
-
-**Using the extension**
-- [Getting Started](docs/getting-started.md): first-time setup, step by step
-- [File Naming](docs/file-naming.md): the `[~M1234~]` tags, and why they matter for dependencies
-- [Installing Mods](docs/installing-mods.md): what the installer does with an archive
-- [Update Mod Information](docs/mod-information.md): filling in mod details from The Forge and source repositories
-- [Update Checks](docs/update-checks.md): how updates are found and when an update is shown
-- [Profile Settings](docs/profile-settings.md): SPT Version, Fika Profile and the GitHub/GitLab/Codeberg tokens
-- [Mod Columns](docs/mod-columns.md): every SPT column and details-panel entry
-- [Tools and Configs](docs/tools-and-configs.md): dashboard shortcuts and Write Configs
-- [Deployment](docs/deployment.md): SPT layout detection, the version guard, empty folders
-- [Troubleshooting](docs/troubleshooting.md): reading the logs and common messages
-
-**Working on the extension**
-- [Architecture](docs/developer/architecture.md): how `index.js` is organized, the update pipeline and the logging conventions
-
----
-
-## Feedback
-
-Found a bug, or want a tool shortcut added? [Open an issue](../../issues). Please include the Vortex log around the problem; [Troubleshooting](docs/troubleshooting.md) explains how to find it.
+Older documentation, kept for reference, is in [BACKUP_INFO.md](BACKUP_INFO.md).
