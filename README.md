@@ -146,7 +146,7 @@ Without the Library, use Vortex's own dependency tool instead (see [Making your 
 - **3.5** If it asks for a game store, choose **Other**, even if you bought the game on Steam.
 <!-- Screenshot: Manually Set Location in the SPT game box -->
 
-**Step 4.** Go to the **SPT** tab in the left menu, **Game Settings** section. Choose a **Staging Folder**, and make sure the **Deployment** method is **Hardlink**. In other words, the staging folder should be on the same drive as your game folder.
+**Step 4.** Go to the **SPT** tab in the left menu, **Game Settings** section. Review the **Staging Folder**, and make sure the **Deployment** method is **Hardlink**. In other words, the staging folder should be on the same drive as your game folder.
 <!-- Screenshot: Game Settings with the staging folder and Hardlink deployment -->
 
 **Step 5.** On the **Profiles** tab, edit your SPT profile and set its **SPT Version** (for example `4.1.6`).
