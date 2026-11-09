@@ -58,18 +58,21 @@ The staging and game folders are not really two full copies. With Vortex's **Har
 <details open>
 <summary><h3>What is a Dependency?</h3></summary>
 
-A **dependency** is another mod that a mod needs in order to work. For example, many mods need a shared library mod such as WTT-CommonLib to be installed too.
+A **dependency** is another mod that a mod needs in order to work. For example, many mods need a shared library mod such as WTT-CommonLib to be enabled too.
 
-Vortex keeps track of dependencies with **rules**, and shows them in the Dependencies column of the Mods page. When a mod's information is updated, the extension creates these rules from The Forge for you:
+Vortex handles dependencies by **creating a rule for a mod**. A rule says what kind of relationship it is, and which other mod(s) it is about. When a mod's information is updated, the extension creates these rules from The Forge for you, and they show in the **Dependencies** column of the Mods page:
 
 | Rule | Vortex calls it | Meaning |
 |---|---|---|
-| `requires` | Requires | This mod needs the other mod, in a version that matches the rule. Vortex warns you when it is missing or disabled. |
+| `requires` | Requires | This mod needs a matching mod to be **enabled**. Vortex warns you when there is none. |
 | `after` | Must deploy after | When both mods contain the same file, this mod's copy wins. |
 | `before` | Must deploy before | When both mods contain the same file, the other mod's copy wins. |
 | `conflicts` | Conflicts with / Can't be deployed together with | The two mods must not be enabled together. Used for mods The Forge marks as incompatible with Fika. |
 
-A rule finds the other mod by its **archive name**: `*~M1219~*` means "any mod whose archive name contains `~M1219~`". That is why archives need their Forge ID tag (see the [Detailed Guide](#getting-a-mod)).
+A rule finds the other mod in one of two ways:
+
+- **By a piece of its archive name** (the rule's `fileExpression`). `*~M1219~*` means "any mod whose archive name contains `~M1219~`": the `*` stands for anything else in the name, such as the mod's name and version. This is why it is useful to put the Forge ID tag, `[~M####~]` or `[~A####~]`, in every archive name: one rule then finds every version of that mod, and the extension can make that rule for you (see [Getting a mod](#getting-a-mod)).
+- **By its Logical File Name** (the rule's `logicalFileName`, Vortex's grouping name). Say several different mods can each satisfy a requirement: give them all the same Logical File Name, and one rule looking for that name is satisfied by any of them.
 
 `after` and `before` only decide which mod's files win in Vortex. They do not change the order in which SPT loads mods.
 
@@ -81,7 +84,9 @@ A rule finds the other mod by its **archive name**: `*~M1219~*` means "any mod w
 <details open>
 <summary><h3>What is a Variant?</h3></summary>
 
-**Variant** is a field Vortex has for every mod. This extension uses it to record **which versions this mod file is made for**, as The Forge reports them:
+**Variant** is a Vortex system that lets you have **multiple versions of the same mod** installed and neatly stacked together, or **the same mod installed with different options** selected. (Those of you familiar with modding Bethesda games and FOMODs will have seen this in action.) In our case, it makes an excellent organizer for **multiple SPT versions of a mod**.
+
+The extension fills in a mod's Variant with the versions that file is made for, as The Forge reports them:
 
 - For a **mod**, it is the SPT versions the file supports, for example `4.1.6` or `~4.1.6`.
 - For an **addon**, it is the versions of its **parent mod** that it supports.
@@ -105,7 +110,7 @@ The value is a version range:
 <details open>
 <summary><h3>How do I use the Rules table?</h3></summary>
 
-The **Rules List** table in the mod details panel comes from my [Utilities Library](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities). How to use it is explained in [its FAQ](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities#how-do-i-use-the-rules-list).
+The **Rules List** table in the mod details panel comes from my [Utilities Library](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities). How to use it is explained in [its FAQ](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities#how-do-i-use-the-rules-list). In Vortex, the round **i** beside the Rules List name shows a short version.
 
 Without the Library, use Vortex's own dependency tool instead (see [Making your own rules](#making-your-own-rules)).
 
@@ -126,11 +131,10 @@ ____
 
 <!-- TODO: test a fresh ("virgin") Vortex install and confirm the exact steps and labels below. -->
 
-**Step 1.** Download and install [Vortex](https://www.nexusmods.com/about/vortex/) to the **same drive** as the games you plan to manage.
-- **1.1** You can save space by having Vortex save its copies of your archives to a different drive.
+**Step 1.** Download and install [Vortex](https://www.nexusmods.com/about/vortex/).
 
 **Step 2.** Download the extension `.zip` from the [Releases](../../releases) page, drop it into the **"Drop File(s)"** box on Vortex's **Extensions** tab, and restart Vortex.
-- **2.1** You can also download my [Utilities Library](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities) now if you wish, and add it to Vortex the same way. It is optional: it saves each mod's information to a `modinfo.json` file and adds an editable Rules List to the mod details panel.
+- **2.1** You can also download my [Utilities Library](https://github.com/CobetcknnKolowski/Vortex-Library-Cobets-Utilities) now if you wish, and add it to Vortex the same way. It is another, optional extension for power users: it lets you use a `modinfo.json` file to prefill a mod's information (useful when you are offline, or for your own personal mods), and adds the Rules List table editor to the mod details panel.
 <!-- Screenshot: the Extensions tab with the Drop File(s) box -->
 
 **Step 3.** If you are not asked to find the game's location automatically:
@@ -167,8 +171,7 @@ ____
 **Step 5.** If you received no warnings about any issues, go to the menu in the top right and click the rocket symbol to **Deploy** your mods.
 
 **Step 6.** After deploying, start the **SPT Server** and **SPT Launcher** with their shortcuts in the lower left.
-
-**Step 7.** The server may complain about empty folders with "missing" assemblies. As long as none of them is a mod you expected to be installed, you can safely ignore these warnings. (As somebody with four 4.1.x profiles, I have quite a few empty folders for mods I am not currently using.)
+- **6.1** The server may complain about empty folders with "missing" assemblies. As long as none of them is a mod you expected to be installed, you can safely ignore these warnings. (As somebody with four 4.1.x profiles, I have quite a few empty folders for mods I am not currently using.)
 
 </details>
 
@@ -239,13 +242,15 @@ About 1.5 seconds after the install, **Update Mod Information** runs by itself f
 <details open>
 <summary><h3>3. Updating mod information</h3></summary>
 
-Select one or more mods on the **Mods** page and choose **Update Mod Information** from the bar at the bottom, or click the *i* icon on a single mod.
+Select one or more mods on the **Mods** page and choose **Update Mod Information** from the bar at the bottom, or right-click a single mod and choose **Update Mod Information**.
+
+To update **every installed mod** at once, use **Update All Mod Information** on the Mods page toolbar (beside Write Configs). It starts with Force Refresh ticked, and it also reaches the versions and variants tucked inside a group, which selecting the group does not. You get one summary notification at the end instead of one per mod.
 
 **The first dialog:**
 
 | Option | Unticked (default) | Ticked |
 |---|---|---|
-| Review each mod individually | Mods that can be identified are updated without asking; the rest get the per-mod dialog. | Every mod gets the per-mod dialog. |
+| Review each mod individually | Mods that can be identified are updated without any more input from you. If something is unclear, you are asked to fill in the missing information. | Every mod gets the per-mod dialog. |
 | Force Refresh | Values already saved in Vortex are kept; Forge data saved earlier is reused. | Everything is fetched again and replaces what is saved, including the mod's rules. |
 
 **The per-mod dialog** asks for the Mod Name, Forge ID, Addon ID, Version, Grouping ID and Source Code Link, and has two checkboxes:
@@ -267,9 +272,9 @@ Select one or more mods on the **Mods** page and choose **Update Mod Information
 
 #### Reading the rules
 
-Updating a mod's information adds its dependency rules (see [What is a Dependency?](#what-is-a-dependency) above for what each type means). In the **Dependencies** column, Vortex shows a mod's rules and warns about any that are not met, such as a required mod that is not installed or enabled. Rules you made yourself are kept when the information is updated, unless you tick Force Refresh.
+Updating a mod's information adds its dependency rules (see [What is a Dependency?](#what-is-a-dependency) above for what each type means). In the **Dependencies** column, Vortex shows a mod's rules and warns about any that are not met. Rules are only checked against **enabled** mods: a required mod that is installed but disabled does not count. Rules you made yourself are kept when the information is updated, unless you tick Force Refresh.
 
-A rule's **version match** says which versions of the other mod count: `*` is any version, `1.0.8` exactly that one, and `>=1.0.0 <=1.2.0` a range.
+A rule's **version match** says which versions of the other mod count. It follows [SemVer](https://semver.org) versioning and pattern matching (`*` is any version).
 
 #### Making your own rules
 
@@ -287,7 +292,7 @@ When two enabled mods contain the same file, Vortex shows a conflict and wants i
 <summary><h3>5. Deploying</h3></summary>
 
 Click **Deploy** (the rocket). Around every deployment the extension:
-- **checks your SPT Version**: if the profile's SPT Version does not match the SPT folder layout (3.11, 4.0 or 4.1), you get a warning. Vortex cannot stop a deployment once it has started, so fix the profile or the folder and deploy again;
+- **checks your SPT Version**: if the profile's SPT Version does not match the SPT folder layout (3.11, 4.0 or 4.1), you get a warning. Vortex won't stop the deployment, so fix any outstanding issues and deploy again;
 - **creates the empty folders** your enabled mods need, and removes the ones it created for mods you disabled (only if they are still empty);
 - **removes Vortex's folder marker files** (`__folder_managed_by_vortex`) from the deployed folders.
 
@@ -297,7 +302,7 @@ Click **Deploy** (the rocket). Around every deployment the extension:
 <details open>
 <summary><h3>6. Playing</h3></summary>
 
-Start the **SPT Server** and **SPT Launcher** from Vortex's tool shortcuts. Shortcuts also appear for the **Server Value Modifier**, the **Fika Installer/Updater** and **Give-UI** once they are installed.
+Start the **SPT Server** and **SPT Launcher** from Vortex's tool shortcuts. Shortcuts also appear for the **Server Value Modifier**, the **Fika Installer/Updater** and **Give-UI** if they are installed.
 
 Start them **from Vortex**: that is how the extension knows when your session ends, to back up your configs.
 
@@ -344,11 +349,25 @@ Use **Check for updates** on the Mods page whenever you like. The extension also
 
 Each mod is checked on **The Forge** (it needs a GUID or Forge ID, and a version) and in its **source code repository** (it needs a Source Code Link and a version). An update is shown only when it is newer than what you have, and that newer version is not already installed as another copy of the same mod for the same SPT version.
 
-A mod with an update shows Vortex's **update icon**. These mods do not come from Nexus Mods, so Vortex cannot download the update itself: **click the icon to open the page where the update is**, download the new archive, keep its tag in the name, and install it.
+When a mod has an update, its **version becomes a clickable link** that takes you directly to where the update is (The Forge, or the source code repository). Download the update, and repeat the file readiness steps from [Getting a mod](#getting-a-mod) before installing it.
 
 **Skip Update:** tick it at the bottom of a mod's details panel (or in the Update Mod Information dialog) for mods that cannot be checked: released on Google Drive or Discord, or made by you. The update checks then leave the mod alone.
 
-**Rate limits:** without a token, GitHub allows 60 requests an hour, which a big mod list can use up in one check. Adding a **GitHub Token** (or GitLab/Codeberg Token) to your profile raises the limit; it only needs to read public repositories.
+#### Rate limits and tokens
+
+Without a token, GitHub allows 60 requests an hour, which a big mod list can use up in one check. A **GitHub Token** on your profile raises that to 5,000. The token only needs to *read public repositories*, so it needs no permissions at all.
+
+**Creating a GitHub token:**
+1. On GitHub, click your profile picture (top right), then **Settings**.
+2. At the bottom of the left sidebar, click **Developer settings**.
+3. Under **Personal access tokens**, click **Fine-grained tokens**, then **Generate new token**.
+4. Give it a **Token name** (for example `Vortex SPT`) and choose an **Expiration**.
+5. Under **Repository access**, choose **Public repositories**.
+6. Leave **Permissions** empty, and click **Generate token**.
+7. Copy the token now: GitHub only shows it once.
+8. In Vortex, go to the **Profiles** tab, edit your SPT profile, and paste it into **GitHub Token**. Each profile has its own token box.
+
+GitLab and Codeberg rarely need a token. If they ask for one: on **GitLab**, click your avatar, then **Edit profile** > **Access tokens**, and create a token with only the `read_api` scope; on **Codeberg**, go to **Settings** > **Applications**, generate a token for **public repositories only** with **repository: Read** access. Paste them into **GitLab Token** or **Codeberg Token** on the profile.
 
 </details>
 
