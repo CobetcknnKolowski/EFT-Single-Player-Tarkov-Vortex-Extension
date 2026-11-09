@@ -3,13 +3,11 @@
 
 A game extension for [Vortex](https://www.nexusmods.com/about/vortex/), the mod manager by Nexus Mods, for managing **Single Player Tarkov (SPT)** mods.
 
----
-
 ## AI Disclaimer
 
 Much of this extension's code was written with the help of AI. Every feature was planned, directed and reviewed by me, and the extension has been through hundreds of hours of hands-on testing with real mod lists and profiles from SPT 3.11.4 to 4.1.6. If something does not behave the way this page says, please [open an issue](https://github.com/CobetcknnKolowski/EFT-Single-Player-Tarkov-Vortex-Extension/issues).
 
----
+____
 
 <a name="faq"></a>
 ## FAQ
@@ -18,6 +16,9 @@ Much of this extension's code was written with the help of AI. Every feature was
 ### Who is this for?
 
 This extension is for people who want a mod manager, but are willing to put in some personal effort to maintain their mod lists: naming archives so they can be recognized, checking that mods are packaged correctly, and keeping an eye on updates.
+
+----
+
 <a name="storage-space"></a>
 ### Why does Vortex "use" so much storage space?
 
@@ -44,6 +45,9 @@ The staging and game folders are not really two full copies. With Vortex's **Har
 > Disadvantages:
 > - mods have to be on the same partition as the game
 > - Due to fact hard links are so "compatible", a lot of applications will act as if original and link were separate files. This includes some backup solutions, tools that measure used disk space and so on, so it will often look like the link was actually a copy.
+
+----
+
 <a name="what-is-a-dependency"></a>
 ### What is a Dependency?
 
@@ -61,6 +65,9 @@ Vortex keeps track of dependencies with **rules**, and shows them in the Depende
 A rule finds the other mod by its **archive name**: `*~M1219~*` means "any mod whose archive name contains `~M1219~`". That is why archives need their Forge ID tag (see the [Detailed Guide](#getting-a-mod)).
 
 `after` and `before` only decide which mod's files win in Vortex. They do not change the order in which SPT loads mods.
+
+----
+
 <a name="what-is-a-variant"></a>
 ### What is a Variant?
 
@@ -79,6 +86,9 @@ The value is a version range:
 | `~4.1.6` | 4.1.6 or a newer 4.1.x |
 | `^4.1.0` | 4.1.0 or newer, below 5.0.0 |
 | `>=4.0.0 <4.2.0` | from 4.0.0 up to, but not including, 4.2.0 |
+
+----
+
 <a name="how-do-i-use-the-rules-table"></a>
 ### How do I use the Rules table?
 
@@ -86,10 +96,11 @@ The **Rules List** table in the mod details panel comes from my [Utilities Libra
 
 Without the Library, use Vortex's own dependency tool instead (see [Making your own rules](#making-your-own-rules)).
 
----
+____
 
 <a name="quick-guide"></a>
 ## Quick Guide
+
 ### Part 1: Vortex and Extension Installation
 
 **Step 1.** Download and install [Vortex](https://www.nexusmods.com/about/vortex/) to the **same drive** as the games you plan to manage.
@@ -105,9 +116,10 @@ Without the Library, use Vortex's own dependency tool instead (see [Making your 
 - **3.4** Select the root of the game folder where you installed SPT: the folder that holds `SPT_Runtime`, `BepInEx`, `EscapeFromTarkov_Data` and so on.
 - **3.5** If it asks for a game store, choose **Other**, even if you bought the game on Steam.
 
-**Step 4.** Go to the **SPT** tab in the left menu, **Game Settings** section. Choose a **Staging Folder**, and make sure the **Deployment** method is **Hardlink**. In other words, the staging folder should be on the same drive as your game folder.
+**Step 4.** Go to the **SPT** tab in the left menu, **Game Settings** section. Review the **Staging Folder**, and make sure the **Deployment** method is **Hardlink**. In other words, the staging folder should be on the same drive as your game folder.
 
 **Step 5.** On the **Profiles** tab, edit your SPT profile and set its **SPT Version** (for example `4.1.6`).
+
 ### Part 2: Mod Installation
 
 **Step 1.** When you download a mod from [The Forge](https://forge.sp-tarkov.com) (or anywhere, really), make sure of a few things:
@@ -127,7 +139,7 @@ Without the Library, use Vortex's own dependency tool instead (see [Making your 
 
 **Step 7.** The server may complain about empty folders with "missing" assemblies. As long as none of them is a mod you expected to be installed, you can safely ignore these warnings. (As somebody with four 4.1.x profiles, I have quite a few empty folders for mods I am not currently using.)
 
----
+____
 
 <a name="detailed-guide"></a>
 ## Detailed Guide
@@ -167,6 +179,7 @@ Open the archive and look at its top level:
 On SPT 4.1 the server's `user` folder lives inside `SPT_Runtime` (inside `SPT` on 4.0). An archive with `user` at the top only fits SPT 3.11.
 
 **To repack:** create the missing folders (for example `SPT_Runtime/user/mods`), extract the archive into them, and pack the top folder into a new archive, keeping the name and tag. `.7z` is usually smallest.
+
 <a name="installing-a-mod"></a>
 ### 2. Installing it
 
@@ -179,6 +192,7 @@ While installing, the extension's installer:
 - hands a `modinfo.json` in the archive to the Utilities Library, if it is installed.
 
 About 1.5 seconds after the install, **Update Mod Information** runs by itself for the new mod, if it can be identified (a tag and a version in its name, or a saved source code link).
+
 <a name="updating-mod-information"></a>
 ### 3. Updating mod information
 
@@ -201,6 +215,7 @@ Select one or more mods on the **Mods** page and choose **Update Mod Information
 3. the mod's **source code repository** on GitHub, GitLab, Codeberg or a Gitea server: name, picture, page link and author.
 
 **Choosing the source code link:** The Forge lists every link a mod has had, often one per SPT version. The extension picks the one for *this* file: one you typed; the one already saved; the only one listed; the one whose label or address names this file's SPT version; links that all point at one repository count as that repository's front page; and finally, the repository that has a release with this file's version. If nothing settles it, you are asked to choose.
+
 <a name="dependencies-and-rules"></a>
 ### 4. Dependencies and rules
 
@@ -218,6 +233,7 @@ A rule's **version match** says which versions of the other mod count: `*` is an
 #### File conflicts
 
 When two enabled mods contain the same file, Vortex shows a conflict and wants it settled before you deploy: decide which mod's copy wins with a `before` or `after` rule. This is exactly what you do for a config mod made from your own settings (see [Making a config mod](#making-a-config-mod)).
+
 <a name="deploying"></a>
 ### 5. Deploying
 
@@ -225,12 +241,14 @@ Click **Deploy** (the rocket). Around every deployment the extension:
 - **checks your SPT Version**: if the profile's SPT Version does not match the SPT folder layout (3.11, 4.0 or 4.1), you get a warning. Vortex cannot stop a deployment once it has started, so fix the profile or the folder and deploy again;
 - **creates the empty folders** your enabled mods need, and removes the ones it created for mods you disabled (only if they are still empty);
 - **removes Vortex's folder marker files** (`__folder_managed_by_vortex`) from the deployed folders.
+
 <a name="playing"></a>
 ### 6. Playing
 
 Start the **SPT Server** and **SPT Launcher** from Vortex's tool shortcuts. Shortcuts also appear for the **Server Value Modifier**, the **Fika Installer/Updater** and **Give-UI** once they are installed.
 
 Start them **from Vortex**: that is how the extension knows when your session ends, to back up your configs.
+
 <a name="backing-up-your-configs"></a>
 ### 7. Backing up your configs
 
@@ -260,6 +278,7 @@ Because a backup keeps the game's folder layout, it is a ready-made starting poi
 2. Pack those top folders into an archive, named like any mod: `MyConfigs-v1.0.0 [~MYCONFIGS~].7z`.
 3. Install it. Vortex reports a **file conflict** with the mods whose files it replaces: give your config mod an `after` rule on them, so your copies win.
 4. Tick **Skip Update** for it, since there is nowhere to check it for updates.
+
 <a name="keeping-mods-up-to-date"></a>
 ### 8. Keeping mods up to date
 
@@ -272,12 +291,14 @@ A mod with an update shows Vortex's **update icon**. These mods do not come from
 **Skip Update:** tick it at the bottom of a mod's details panel (or in the Update Mod Information dialog) for mods that cannot be checked: released on Google Drive or Discord, or made by you. The update checks then leave the mod alone.
 
 **Rate limits:** without a token, GitHub allows 60 requests an hour, which a big mod list can use up in one check. Adding a **GitHub Token** (or GitLab/Codeberg Token) to your profile raises the limit; it only needs to read public repositories.
+
 <a name="when-something-goes-wrong"></a>
 ### 9. When something goes wrong
 
 The extension reports at three levels: a **notification** (what happened, to which mod), an **INFO / WARN / ERROR** line in the Vortex log (the same, plus what failed), and **DEBUG** lines (every request and answer, and every decision).
 
 To find the log, use **Open Logs Folder** in the Mods page toolbar's **Open...** menu, and open `vortex.log`. When you [open an issue](https://github.com/CobetcknnKolowski/EFT-Single-Player-Tarkov-Vortex-Extension/issues), please attach the part of the log around the problem.
----
+
+____
 
 Older documentation, kept for reference, is in [BACKUP_INFO.md](https://github.com/CobetcknnKolowski/EFT-Single-Player-Tarkov-Vortex-Extension/blob/main/BACKUP_INFO.md).

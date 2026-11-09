@@ -2,31 +2,27 @@
 
 A game extension for [Vortex](https://www.nexusmods.com/about/vortex/), the mod manager by Nexus Mods, for managing **Single Player Tarkov (SPT)** mods.
 
-<table width="100%"><tr><td>
-
 ## AI Disclaimer
 
 Much of this extension's code was written with the help of AI. Every feature was planned, directed and reviewed by me, and the extension has been through hundreds of hours of hands-on testing with real mod lists and profiles from SPT 3.11.4 to 4.1.6. If something does not behave the way this page says, please [open an issue](../../issues).
 
-</td></tr></table>
+____
 
 <a name="faq"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h2>FAQ</h2></summary>
 
 <a name="who-is-this-for"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>Who is this for?</h3></summary>
 
 This extension is for people who want a mod manager, but are willing to put in some personal effort to maintain their mod lists: naming archives so they can be recognized, checking that mods are packaged correctly, and keeping an eye on updates.
 
 </details>
-</td></tr></table>
+
+----
 
 <a name="storage-space"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>Why does Vortex "use" so much storage space?</h3></summary>
 
@@ -55,10 +51,10 @@ The staging and game folders are not really two full copies. With Vortex's **Har
 > - Due to fact hard links are so "compatible", a lot of applications will act as if original and link were separate files. This includes some backup solutions, tools that measure used disk space and so on, so it will often look like the link was actually a copy.
 
 </details>
-</td></tr></table>
+
+----
 
 <a name="what-is-a-dependency"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>What is a Dependency?</h3></summary>
 
@@ -78,10 +74,10 @@ A rule finds the other mod by its **archive name**: `*~M1219~*` means "any mod w
 `after` and `before` only decide which mod's files win in Vortex. They do not change the order in which SPT loads mods.
 
 </details>
-</td></tr></table>
+
+----
 
 <a name="what-is-a-variant"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>What is a Variant?</h3></summary>
 
@@ -102,10 +98,10 @@ The value is a version range:
 | `>=4.0.0 <4.2.0` | from 4.0.0 up to, but not including, 4.2.0 |
 
 </details>
-</td></tr></table>
+
+----
 
 <a name="how-do-i-use-the-rules-table"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>How do I use the Rules table?</h3></summary>
 
@@ -114,15 +110,14 @@ The **Rules List** table in the mod details panel comes from my [Utilities Libra
 Without the Library, use Vortex's own dependency tool instead (see [Making your own rules](#making-your-own-rules)).
 
 </details>
-</td></tr></table>
 
-<!-- More FAQ entries go here, each in its own boxed, collapsible block like the ones above. -->
+<!-- More FAQ entries go here: a ---- line, then a collapsible block like the ones above. -->
 
 </details>
-</td></tr></table>
+
+____
 
 <a name="quick-guide"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h2>Quick Guide</h2></summary>
 
@@ -178,17 +173,16 @@ Without the Library, use Vortex's own dependency tool instead (see [Making your 
 </details>
 
 </details>
-</td></tr></table>
+
+____
 
 <a name="detailed-guide"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h2>Detailed Guide</h2></summary>
 
 The same journey as the Quick Guide, from downloading a mod to playing, then keeping it up to date, with the details of each part.
 
 <a name="getting-a-mod"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>1. Getting a mod</h3></summary>
 
@@ -224,10 +218,8 @@ On SPT 4.1 the server's `user` folder lives inside `SPT_Runtime` (inside `SPT` o
 **To repack:** create the missing folders (for example `SPT_Runtime/user/mods`), extract the archive into them, and pack the top folder into a new archive, keeping the name and tag. `.7z` is usually smallest.
 
 </details>
-</td></tr></table>
 
 <a name="installing-a-mod"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>2. Installing it</h3></summary>
 
@@ -242,10 +234,8 @@ While installing, the extension's installer:
 About 1.5 seconds after the install, **Update Mod Information** runs by itself for the new mod, if it can be identified (a tag and a version in its name, or a saved source code link).
 
 </details>
-</td></tr></table>
 
 <a name="updating-mod-information"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>3. Updating mod information</h3></summary>
 
@@ -270,10 +260,8 @@ Select one or more mods on the **Mods** page and choose **Update Mod Information
 **Choosing the source code link:** The Forge lists every link a mod has had, often one per SPT version. The extension picks the one for *this* file: one you typed; the one already saved; the only one listed; the one whose label or address names this file's SPT version; links that all point at one repository count as that repository's front page; and finally, the repository that has a release with this file's version. If nothing settles it, you are asked to choose.
 
 </details>
-</td></tr></table>
 
 <a name="dependencies-and-rules"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>4. Dependencies and rules</h3></summary>
 
@@ -293,10 +281,8 @@ A rule's **version match** says which versions of the other mod count: `*` is an
 When two enabled mods contain the same file, Vortex shows a conflict and wants it settled before you deploy: decide which mod's copy wins with a `before` or `after` rule. This is exactly what you do for a config mod made from your own settings (see [Making a config mod](#making-a-config-mod)).
 
 </details>
-</td></tr></table>
 
 <a name="deploying"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>5. Deploying</h3></summary>
 
@@ -306,10 +292,8 @@ Click **Deploy** (the rocket). Around every deployment the extension:
 - **removes Vortex's folder marker files** (`__folder_managed_by_vortex`) from the deployed folders.
 
 </details>
-</td></tr></table>
 
 <a name="playing"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>6. Playing</h3></summary>
 
@@ -318,10 +302,8 @@ Start the **SPT Server** and **SPT Launcher** from Vortex's tool shortcuts. Shor
 Start them **from Vortex**: that is how the extension knows when your session ends, to back up your configs.
 
 </details>
-</td></tr></table>
 
 <a name="backing-up-your-configs"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>7. Backing up your configs</h3></summary>
 
@@ -353,10 +335,8 @@ Because a backup keeps the game's folder layout, it is a ready-made starting poi
 4. Tick **Skip Update** for it, since there is nowhere to check it for updates.
 
 </details>
-</td></tr></table>
 
 <a name="keeping-mods-up-to-date"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>8. Keeping mods up to date</h3></summary>
 
@@ -371,10 +351,8 @@ A mod with an update shows Vortex's **update icon**. These mods do not come from
 **Rate limits:** without a token, GitHub allows 60 requests an hour, which a big mod list can use up in one check. Adding a **GitHub Token** (or GitLab/Codeberg Token) to your profile raises the limit; it only needs to read public repositories.
 
 </details>
-</td></tr></table>
 
 <a name="when-something-goes-wrong"></a>
-<table width="100%"><tr><td>
 <details open>
 <summary><h3>9. When something goes wrong</h3></summary>
 
@@ -383,11 +361,9 @@ The extension reports at three levels: a **notification** (what happened, to whi
 To find the log, use **Open Logs Folder** in the Mods page toolbar's **Open...** menu, and open `vortex.log`. When you [open an issue](../../issues), please attach the part of the log around the problem.
 
 </details>
-</td></tr></table>
 
 </details>
-</td></tr></table>
 
----
+____
 
 Older documentation, kept for reference, is in [BACKUP_INFO.md](BACKUP_INFO.md).
