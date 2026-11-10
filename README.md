@@ -4,30 +4,29 @@ A game extension for [Vortex](https://www.nexusmods.com/about/vortex/), the mod 
 
 ## AI Disclaimer
 
-Much of this extension's code was written with the help of AI. Every feature was planned, directed and reviewed by me, and the extension has been through hundreds of hours of hands-on testing with real mod lists and profiles from SPT 3.11.4 to 4.1.6. If something does not behave the way this page says, please [open an issue](../../issues).
+Much of this extension's code was written with the help of AI. With that said it has been through hundreds of hours of Personal use and testers with real mod lists and profiles from SPT 3.11.4 to 4.1.6. If something does not behave the way this page says, please [open an issue](../../issues).
 
-____
-
+----
+----
 <a name="faq"></a>
 <details open>
 <summary><h2>FAQ</h2></summary>
+  
+----
 
 <a name="who-is-this-for"></a>
 <details open>
 <summary><h3>Who is this for?</h3></summary>
-
 This extension is for people who want a mod manager, but are willing to put in some personal effort to maintain their mod lists: naming archives so they can be recognized, checking that mods are packaged correctly, and keeping an eye on updates.
-
 </details>
 
 ----
 
 <a name="storage-space"></a>
-<details open>
+<details close>
 <summary><h3>Why does Vortex "use" so much storage space?</h3></summary>
-
 A Mod for Vortex "shows up" in up to four places:
-
+  
 1. **The archive you downloaded**, wherever your browser saved it.
 2. **Vortex's copy of that archive**, in Vortex's own archive folder.
 3. **The unpacked archive in the "Staging" folder**, where Vortex keeps every installed mod.
@@ -58,24 +57,26 @@ The staging and game folders are not really two full copies. With Vortex's **Har
 <details open>
 <summary><h3>What is a Dependency?</h3></summary>
 
-A **dependency** is another mod that a mod needs in order to work. For example, many mods need a shared library mod such as WTT-CommonLib to be enabled too.
+A **Dependency** is a Rule created for a mod that describes a relationship to another mod. For example, if a mod relies on another mod to be installed, You can create a rule so that Vortex will track if the other mod is currently enabled.
 
-Vortex handles dependencies by **creating a rule for a mod**. A rule says what kind of relationship it is, and which other mod(s) it is about. When a mod's information is updated, the extension creates these rules from The Forge for you, and they show in the **Dependencies** column of the Mods page:
+When a mod has an Information Update is run, the extension creates these rules from The Forge for you, and they show in the **Dependencies** column of the Mods Panel:
+ - The Extension only automatically creates rules based on what a mod author has provided to the Forge, If the author made a mistake, such as still listing the 4.0 CommonLib version instead of the 4.1 version for a 4.1 mod update, you can clear/edit the rule to manually fix it and let the author POLITELY know.
 
 | Rule | Vortex calls it | Meaning |
 |---|---|---|
-| `requires` | Requires | This mod needs a matching mod to be **enabled**. Vortex warns you when there is none. |
-| `after` | Must deploy after | When both mods contain the same file, this mod's copy wins. |
-| `before` | Must deploy before | When both mods contain the same file, the other mod's copy wins. |
-| `conflicts` | Conflicts with / Can't be deployed together with | The two mods must not be enabled together. Used for mods The Forge marks as incompatible with Fika. |
+| `requires` | Requires | This mod requires a matching mod to be **enabled**. |
+| `after` | Must deploy after | When both mods contain the same file, this mod wins the overwrite. |
+| `before` | Must deploy before | When both mods contain the same file, the other mod wins the overwrite. |
+| `conflicts` | Conflicts with / Can't be deployed together with | The two mods must not be enabled together. The extension automatically creates FIKA fileExpression and logicalFileName Conflicts rules, If you set the current mod "Profile" as FIKA, then you'll get a warning if fika incompatible mods are enabled.|
+
+Vortex will warn you about issues by coloring the Dependency Icon Red, as well as coloring the specific rule being unmet red.
 
 A rule finds the other mod in one of two ways:
 
-- **By a piece of its archive name** (the rule's `fileExpression`). `*~M1219~*` means "any mod whose archive name contains `~M1219~`": the `*` stands for anything else in the name, such as the mod's name and version. This is why it is useful to put the Forge ID tag, `[~M####~]` or `[~A####~]`, in every archive name: one rule then finds every version of that mod, and the extension can make that rule for you (see [Getting a mod](#getting-a-mod)).
-- **By its Logical File Name** (the rule's `logicalFileName`, Vortex's grouping name). Say several different mods can each satisfy a requirement: give them all the same Logical File Name, and one rule looking for that name is satisfied by any of them.
+- **By parsing archive names** (the `fileExpression` parameter). `*~M1219~*` means "any mod whose archive name contains `~M1219~`": the `*` being wildcard strings. This is why it is useful to put the Forge ID tag, `[~M####~]` or `[~A####~]`, in every archive name: one rule then finds every version of that mod, and the extension can make that rule for you.
+- **By Logical File Name attributes** (the `logicalFileName` parameter). Say a mod has been updated by others and given new forge pages each time, like the Inventory Organzing Features series of mods. Instead of having to create conflict rules for each one with each other, you instead choose to use a more human readable logicalFileName value, such as ~ IOF ~ and then every version can stack with each other using Vortex's Variant system and you only need to choose the version that matches your SPT version.
 
-`after` and `before` only decide which mod's files win in Vortex. They do not change the order in which SPT loads mods.
-
+Note: `after` and `before` rules only decide which mod files win overwrite contests Vortex. They do not change the order in which SPT loads mods. (Future Plans include creating a Function to allow setting a load order in SPT, for compatibility with 3.11.4 and below *Shoutout to the 3.9.8 homies still hanging on*. 
 </details>
 
 ----
